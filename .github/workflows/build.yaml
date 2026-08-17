@@ -9,10 +9,6 @@ jobs:
   build-system:
     name: swift build (${{ matrix.build-system }})
     runs-on: macos-latest
-    # The swiftbuild engine is expected to fail while the target is rooted at the repository root:
-    # it compiles the example app's iOS storyboard for macOS, which ibtool rejects. Non-blocking
-    # until that is fixed, so this workflow can land and demonstrate the failure it guards against.
-    continue-on-error: ${{ matrix.build-system == 'swiftbuild' }}
     strategy:
       fail-fast: false
       matrix:
