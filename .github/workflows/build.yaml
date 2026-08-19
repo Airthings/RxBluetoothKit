@@ -5,67 +5,46 @@ on:
     branches: [master]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-system:
+  build:
     name: swift build (${{ matrix.build-system }})
     runs-on: macos-latest
-    # The swiftbuild engine is expected to fail while the target is rooted at the repository root:
-    # it compiles the example app's iOS storyboard for macOS, which ibtool rejects. Non-blocking
-    # until that is fixed, so this workflow can land and demonstrate the failure it guards against.
-    continue-on-error: ${{ matrix.build-system == 'swiftbuild' }}
     strategy:
       fail-fast: false
       matrix:
         build-system: [native, swiftbuild]
+    env:
+      BUILD_SYSTEM: ${{ matrix.build-system }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Report toolchain
         run: swift --version
 
-      - name: Build
-        env:
-          BUILD_SYSTEM: ${{ matrix.build-system }}
-        run: |
-          set -euo pipefail
-          if ! swift build --help | grep -q -- --build-system; then
-            if [ "$BUILD_SYSTEM" = native ]; then
-              echo "::notice::No --build-system flag on this toolchain; building with its default."
-              swift build
-              exit 0
-            fi
-            echo "::error::This toolchain cannot select a build system, so the $BUILD_SYSTEM leg" \
-                 "cannot be verified. Use a toolchain that supports --build-system."
-            exit 1
-          fi
-          swift build --build-system "$BUILD_SYSTEM"
+      - name: macOS
+        run: swift build --build-system "$BUILD_SYSTEM"
 
-  platforms:
-    name: swift build (${{ matrix.name }})
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: iOS
-            sdk: iphoneos
-            triple: arm64-apple-ios12.0
-          - name: tvOS
-            sdk: appletvos
-            triple: arm64-apple-tvos12.0
-          - name: watchOS
-            sdk: watchos
-            triple: arm64_32-apple-watchos4.0
-    steps:
-      - uses: actions/checkout@v4
-
-      # Every declared platform, not just the host: resource handling is platform-specific, so a
-      # macOS-only check cannot see a file that only breaks when built for a device.
-      - name: Build
-        env:
-          SDK: ${{ matrix.sdk }}
-          TRIPLE: ${{ matrix.triple }}
+      - name: iOS
+        if: '!cancelled()'
         run: |
-          set -euo pipefail
-          swift build --sdk "$(xcrun --sdk "$SDK" --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "$TRIPLE"
+          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
+            -Xswiftc -target -Xswiftc "arm64-apple-ios$(xcrun --sdk iphoneos --show-sdk-version)"
+
+      - name: tvOS
+        if: '!cancelled()'
+        run: |
+          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk appletvos --show-sdk-path)" \
+            -Xswiftc -target -Xswiftc "arm64-apple-tvos$(xcrun --sdk appletvos --show-sdk-version)"
+
+      - name: watchOS
+        if: '!cancelled()'
+        run: |
+          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk watchos --show-sdk-path)" \
+            -Xswiftc -target -Xswiftc "arm64_32-apple-watchos$(xcrun --sdk watchos --show-sdk-version)"
