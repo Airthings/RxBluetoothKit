@@ -21,7 +21,6 @@ let package = Package(
                 dependencies: [
                     "RxSwift"
                 ],
-                // Rooted here so nothing outside the source tree becomes a resource.
                 path: "Source",
                 exclude: [
                     "Info.plist",
