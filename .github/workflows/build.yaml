@@ -20,8 +20,6 @@ jobs:
       fail-fast: false
       matrix:
         build-system: [native, swiftbuild]
-    env:
-      BUILD_SYSTEM: ${{ matrix.build-system }}
     steps:
       - uses: actions/checkout@v7
 
@@ -29,25 +27,16 @@ jobs:
         run: swift --version
 
       - name: macOS
-        run: swift build --build-system "$BUILD_SYSTEM"
+        run: swift build --build-system ${{ matrix.build-system }}
 
       - name: iOS
         if: '!cancelled()'
-        run: |
-          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="ios")|.version')
-          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64-apple-ios$floor"
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64-apple-ios12.0
 
       - name: tvOS
         if: '!cancelled()'
-        run: |
-          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="tvos")|.version')
-          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk appletvos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64-apple-tvos$floor"
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk appletvos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64-apple-tvos12.0
 
       - name: watchOS
         if: '!cancelled()'
-        run: |
-          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="watchos")|.version')
-          swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk watchos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64_32-apple-watchos$floor"
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk watchos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64_32-apple-watchos4.0
