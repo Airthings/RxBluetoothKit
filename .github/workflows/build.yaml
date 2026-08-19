@@ -23,7 +23,7 @@ jobs:
     env:
       BUILD_SYSTEM: ${{ matrix.build-system }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Report toolchain
         run: swift --version
@@ -34,17 +34,20 @@ jobs:
       - name: iOS
         if: '!cancelled()'
         run: |
+          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="ios")|.version')
           swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64-apple-ios$(xcrun --sdk iphoneos --show-sdk-version)"
+            -Xswiftc -target -Xswiftc "arm64-apple-ios$floor"
 
       - name: tvOS
         if: '!cancelled()'
         run: |
+          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="tvos")|.version')
           swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk appletvos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64-apple-tvos$(xcrun --sdk appletvos --show-sdk-version)"
+            -Xswiftc -target -Xswiftc "arm64-apple-tvos$floor"
 
       - name: watchOS
         if: '!cancelled()'
         run: |
+          floor=$(swift package dump-package | jq -r '.platforms[]|select(.platformName=="watchos")|.version')
           swift build --build-system "$BUILD_SYSTEM" --sdk "$(xcrun --sdk watchos --show-sdk-path)" \
-            -Xswiftc -target -Xswiftc "arm64_32-apple-watchos$(xcrun --sdk watchos --show-sdk-version)"
+            -Xswiftc -target -Xswiftc "arm64_32-apple-watchos$floor"
