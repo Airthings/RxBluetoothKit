@@ -21,15 +21,10 @@ let package = Package(
                 dependencies: [
                     "RxSwift"
                 ],
-                path: ".",
+                path: "Source",
                 exclude: [
-                    "Example",
-                    "Tests",
-                    "Source/Info.plist",
-                    "Source/RxBluetoothKit.h"
-                ],
-                sources: [
-                    "Source"
+                    "Info.plist",
+                    "RxBluetoothKit.h"
                 ],
                 swiftSettings: [
                     .enableExperimentalFeature("StrictConcurrency")

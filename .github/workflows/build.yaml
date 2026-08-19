@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: swift build (${{ matrix.build-system }})
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-system: [native, swiftbuild]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Report toolchain
+        run: swift --version
+
+      - name: macOS
+        run: swift build --build-system ${{ matrix.build-system }}
+
+      - name: iOS
+        if: '!cancelled()'
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk iphoneos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64-apple-ios12.0
+
+      - name: tvOS
+        if: '!cancelled()'
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk appletvos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64-apple-tvos12.0
+
+      - name: watchOS
+        if: '!cancelled()'
+        run: swift build --build-system ${{ matrix.build-system }} --sdk "$(xcrun --sdk watchos --show-sdk-path)" -Xswiftc -target -Xswiftc arm64_32-apple-watchos4.0
