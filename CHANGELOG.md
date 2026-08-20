@@ -1,3 +1,20 @@
+# 6.4.0
+- Rooted the SPM target at `Source`, fixing macOS builds under the swiftbuild engine
+- Required RxSwift `>=6.10.0 <6.11.0`; 6.10 was previously excluded entirely
+- Added a build workflow
+
+# 6.3.6
+- Updated RxSwift to 6.9.0
+
+# 6.3.5
+- Updated RxSwift to 6.8.0
+
+# 6.3.4
+- Bumped the Swift tools version to 5.9
+
+# 6.3.3
+- Updated RxSwift to 6.7.1
+
 # 6.3.2
 - Fix 6.3.1 release
 
