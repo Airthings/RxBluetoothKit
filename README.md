@@ -7,10 +7,6 @@
   />
 </p>
 
-[![CI Status](http://img.shields.io/travis/Polidea/RxBluetoothKit.svg?style=flat)](https://travis-ci.org/Polidea/RxBluetoothKit)
-[![Platform](https://img.shields.io/cocoapods/p/RxBluetoothKit.svg?style=flat)](http://cocoapods.org/pods/RxBluetoothKit)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 RxBluetoothKit is a Bluetooth library that makes interaction with BLE devices much more pleasant. It's backed by RxSwift and CoreBluetooth and it provides nice API, for both Central and Peripheral modes. All to work with and make your code more readable, reliable and easier to maintain. 
 
 Here is a sneak peek of what you can do with RxBluetoothKit:
@@ -67,26 +63,6 @@ With just 9 lines it started scanning, connecting to the peripheral, discovering
 Want to migrate from 4.x to 5.x? Check guidelines [here](https://github.com/Polidea/RxBluetoothKit/wiki/Migrating-to-5.x).
 
 # Installation
-
-## CocoaPods
-[CocoaPods](http://cocoapods.org) is a dependency manager for CocoaProjects.
-To integrate RxBluetoothKit into your Xcode project using CocoaPods specify it in your `Podfile`:
-```ruby
-pod 'RxBluetoothKit_Airthings'
-```
-Then, run the following command:
-`$ pod install`
-
-## Carthage
-
-#### FYI: Carthage has some issues with Xcode 12 or later. Therefore it is not supported properly. Always welcome developers to fix it.
-
-~[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-To integrate RxBluetoothKit into your Xcode project using Carthage  specify it in your `Cartfile`:~
-```swift
-github "Polidea/RxBluetoothKit"
-```
-~Then, run `carthage update` to build framework and drag `RxBluetoothKit.framework` into your Xcode project.~
 
 ## Swift Package Manager
 
