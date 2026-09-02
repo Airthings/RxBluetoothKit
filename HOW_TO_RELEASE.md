@@ -1,10 +1,14 @@
+# How to release
 
-## Steps that needs to be done to release new version
+Consumers integrate this fork through the Swift Package Manager and pin a tag, so a
+release is a tag plus a GitHub release — there are no artifacts to build or upload.
 
-- add new change log to `Changelog.md`
-- change `RxBluetoothKit.podspec` with new library version
-- generate new doc by running script `./scripts/generate-docs.sh x.x.x`
-- create archive by running `carthage build --no-skip-current && carthage archive RxBluetoothKit`
-- create new Pull Request with that changes and merge it
-- create new release on github and add archive previously created
-- add library to cocoapods trunk by running: `pod trunk push RxBluetoothKit.podspec`
+1. Add a section for the new version at the top of [CHANGELOG.md](CHANGELOG.md).
+2. Open a pull request with that change and merge it once the build workflow is green.
+3. Tag the merge commit with the bare version number — `6.4.0`, not `v6.4.0`, to match
+   the existing tags — and push the tag.
+4. Create a GitHub release from that tag, using the changelog section as its notes.
+
+A version bump that raises the required RxSwift range is a breaking change for anyone
+pinning an older RxSwift: the manifest pins an exact minor, so a consumer cannot satisfy
+both. Call it out in the changelog.
