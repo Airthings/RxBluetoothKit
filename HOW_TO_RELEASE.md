@@ -9,6 +9,7 @@ release is a tag plus a GitHub release — there are no artifacts to build or up
    the existing tags — and push the tag.
 4. Create a GitHub release from that tag, using the changelog section as its notes.
 
-A version bump that raises the required RxSwift range is a breaking change for anyone
-pinning an older RxSwift: the manifest pins an exact minor, so a consumer cannot satisfy
-both. Call it out in the changelog.
+Raising the required RxSwift range breaks anyone pinned to an older RxSwift: the manifest
+allows one minor at a time, and Swift Package Manager resolves a single RxSwift across the
+whole consumer graph, so both cannot be satisfied. Decide the version number with that in
+mind rather than by habit, and say so in the changelog.

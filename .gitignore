@@ -19,6 +19,8 @@ DerivedData
 *.xcuserstate
 
 timeline.xctimeline
+Carthage/Checkouts
+Carthage/Build
 .idea
 .DS_Store
 .build
