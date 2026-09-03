@@ -1,9 +1,0 @@
-github_url: https://github.com/Polidea/RxBluetoothKit
-module: RxBluetoothKit
-author_url: https://polidea.com
-author: Polidea
-clean: true
-output: ./docs
-root-url: https://polidea.github.io/RxBluetoothKit/
-
-podspec: ./RxBluetoothKit.podspec
