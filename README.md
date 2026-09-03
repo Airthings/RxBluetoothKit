@@ -7,10 +7,6 @@
   />
 </p>
 
-[![CI Status](http://img.shields.io/travis/Polidea/RxBluetoothKit.svg?style=flat)](https://travis-ci.org/Polidea/RxBluetoothKit)
-[![Platform](https://img.shields.io/cocoapods/p/RxBluetoothKit.svg?style=flat)](http://cocoapods.org/pods/RxBluetoothKit)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
 RxBluetoothKit is a Bluetooth library that makes interaction with BLE devices much more pleasant. It's backed by RxSwift and CoreBluetooth and it provides nice API, for both Central and Peripheral modes. All to work with and make your code more readable, reliable and easier to maintain. 
 
 Here is a sneak peek of what you can do with RxBluetoothKit:
@@ -68,26 +64,6 @@ Want to migrate from 4.x to 5.x? Check guidelines [here](https://github.com/Poli
 
 # Installation
 
-## CocoaPods
-[CocoaPods](http://cocoapods.org) is a dependency manager for CocoaProjects.
-To integrate RxBluetoothKit into your Xcode project using CocoaPods specify it in your `Podfile`:
-```ruby
-pod 'RxBluetoothKit_Airthings'
-```
-Then, run the following command:
-`$ pod install`
-
-## Carthage
-
-#### FYI: Carthage has some issues with Xcode 12 or later. Therefore it is not supported properly. Always welcome developers to fix it.
-
-~[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-To integrate RxBluetoothKit into your Xcode project using Carthage  specify it in your `Cartfile`:~
-```swift
-github "Polidea/RxBluetoothKit"
-```
-~Then, run `carthage update` to build framework and drag `RxBluetoothKit.framework` into your Xcode project.~
-
 ## Swift Package Manager
 
 Versions >= 4.0 of the library integrate with the Swift Package Manager. In order to do that please specify our project as one of your dependencies in `Package.swift` file.
@@ -112,14 +88,5 @@ Learn more about Polidea's BLE services [here](https://www.polidea.com/services/
 
 # Requirements
 
-- iOS 9.0+
-- OSX 10.13+
-- watchOS 4.0+
-- tvOS 11.0+
-- Xcode 11.4+
-
-## Swift versions
-* 3.0 version supports Swift 3.0 and 3.1
-* 5.0 version supports Swift 3.2 and 4.0
-* 5.1.2 version supports Swift 4.1
-* 5.2 version supports Swift 5.0 and 4.2
+The supported platform versions and the Swift tools version are declared in
+[Package.swift](Package.swift).
