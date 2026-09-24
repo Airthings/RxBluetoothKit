@@ -7,7 +7,7 @@ let package = Package(
     name: "RxBluetoothKit_Airthings",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4)
+        .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v5)
     ],
     products: [
         .library(name: "RxBluetoothKit_Airthings", targets: ["RxBluetoothKit_Airthings"])
